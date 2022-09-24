@@ -2,10 +2,11 @@ const express = require('express');
 const { conn, seed, Product } = require('./db');
 const app = express();
 const path = require('path');
-app.use(express.json());
 
+app.use(express.json());
 app.use('/dist', express.static('dist'));
 app.use('/assets', express.static('assets'));
+
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.get('/api/products', (req, res, next) => {
@@ -19,6 +20,11 @@ app.put('/api/products/:id', (req, res, next) => {
     .then((product) => product.update(req.body))
     .then((product) => res.send(product))
     .catch(next);
+});
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).send(err);
 });
 
 const start = async () => {
