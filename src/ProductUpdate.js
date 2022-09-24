@@ -29,7 +29,7 @@ const ProductUpdate = () => {
     e.preventDefault();
     const updated = { id, name, price, numberInStock };
     try {
-      await dispatch(updateProduct(updated, navigate));
+      dispatch(updateProduct(updated, navigate));
     } catch (error) {
       setError(error.response.data);
     }
